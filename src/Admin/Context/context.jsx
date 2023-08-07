@@ -6,8 +6,8 @@ import Cookies from "js-cookie";
 export const GlobalContext = createContext("Initial Value");
 
 let data = {
-    user: undefined,
-    role : undefined,
+    // user: undefined,
+    // role : undefined,
     token: Cookies.get('token')||undefined
 };
 export default function ContextProvider({ children }) {

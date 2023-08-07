@@ -16,7 +16,7 @@ export default function Admin() {
         <div className="col-md-3 bg-dark">
           <Sidebar/>
         </div>
-        <div className="col-md-9 bg-danger">
+        <div className="col-md-9">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/brands" element={<Brands />} />

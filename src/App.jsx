@@ -22,7 +22,7 @@ export default function App() {
  const  currentToken = getDecodeToken (state.token)
 console.log(currentToken)
   // const CurrentUser = UserByRole(state?.role)
-  const CurrentUser = UserByRole(state.role)
+  const CurrentUser = UserByRole(currentToken.role)
   return <CurrentUser/>
   
 //   const {state, dispatch} = useContext(GlobalContext)
