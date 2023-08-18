@@ -4,7 +4,7 @@ import Sidebar from './Components/SideBar';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from './Pages/Home'
 import Brands from './Pages/Brands'
-import Categories from './Pages/Categories'
+import Category from './Pages/Category';
 import Orders from './Pages/Orders'
 import Products from './Pages/Products';
 
@@ -20,9 +20,10 @@ export default function Admin() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/brands" element={<Brands />} />
-            <Route path="/category" element={<Categories />} />
+            <Route path="/category" element={<Category />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/products" element={<Products />} />
+            <Route path="*" element={<Home />} />
           </Routes>
         </div>
       </div>

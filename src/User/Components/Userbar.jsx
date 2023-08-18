@@ -1,26 +1,52 @@
-import React from 'react';
+import React, { useContext } from 'react'; // Import useContext
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/Navbar';
 import { CgProfile } from 'react-icons/cg';
-import Login from '../../Components/Login';
-import Logout from '../../Components/Logout';
+import Cookies from 'js-cookie';
+import { GlobalContext } from '../../Admin/Context/context'; // Import GlobalContext
+
+import './userbar.css'; // Import the CSS file
 
 export default function Userbar() {
+  const { dispatch } = useContext(GlobalContext); // Use the context
+
+  const handleSignout = () => {
+    Cookies.remove('token');
+    dispatch({ type: "USER_LOGOUT" });
+    history.push('/guest');
+  };
+
   return (
-    <Navbar  className='bg-dark'>
+    <Navbar className='userbar'>
       <Container>
-        <Navbar.Brand href="#home" className='text-white'>User</Navbar.Brand>
+        <Navbar.Brand href="#home" className='text-black'>User</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text  className='text-white'>
+
+          <Nav className="mx-auto">
+            <Link to='/home' className='nav-link text-black'>Home</Link>
+            <Link to='/brands' className='nav-link text-black'>Brands</Link>
+            <Link to='/products' className='nav-link text-black'>Products</Link>
+            <Link to='/category' className='nav-link text-black'>Category</Link>
+          </Nav>
+
+          <Navbar.Text className='text-black'>
             <span style={{ display: 'flex', alignItems: 'center' }}>
-              <CgProfile style={{ marginRight: '10px' }} />
-              User Name
+              <CgProfile className="userbar-profile" />
+              <span className="userbar-user">User Name</span>
             </span>
           </Navbar.Text>
-          <button className=" btn btn-light ms-4"><Login/></button>
-          <button className=" btn btn-light ms-4"><Logout/></button>
+
+          <Link to='/cart' className='nav-link text-black px-3'>Cart</Link>
+          
+          <button
+            className="btn btn-dark"
+            onClick={handleSignout}
+          >
+            Sign Out
+          </button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

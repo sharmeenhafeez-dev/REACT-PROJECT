@@ -3,8 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { storage } from '../utils/FirebaseConfige';
 import { ref, uploadBytes,getDownloadURL} from 'firebase/storage'; 
+import axios from 'axios';
 
-function AddCategory() {
+function AddCategory({recallData}) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -15,16 +16,22 @@ function AddCategory() {
 
   const SubmitCategory = (e)=>{
     e.preventDefault()
-    const ImageRef = ref(storage, `images/${CategoryImage}`)
+    const ImageRef = ref(storage, `images/category/${CategoryImage.name}`)
 
     uploadBytes(ImageRef, CategoryImage).then((snapshot) => {
     
       getDownloadURL(snapshot.ref)
       .then((url) => {
-        const payload = {
-          CategoryName,
-          CategoryImage: url
-      }
+        console.log(url)
+        const payload = { CategoryName, CategoryImage: url}
+
+        axios.post('http://localhost:1234/api/add-category',payload)
+        .then((json)=>{
+          setShow(false);
+          recallData(json.data.categorise);
+
+          console.log(json.data)})
+        .catch((error)=>alert(error.message))
       console.log("READY TO UPLOAD",payload)
       })
       .catch((error) => {

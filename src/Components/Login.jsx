@@ -1,90 +1,127 @@
-import React from 'react'
-import { useState } from 'react';
-import { useContext } from 'react';
-// import Button from 'react-bootstrap/Button';
+import React, { useState, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2';
 import { GlobalContext } from '../Admin/Context/context';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import './login.css'; // Import the CSS file
 
 export default function Login() {
-
   const [show, setShow] = useState(false);
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("")
-const {state,dispatch} = useContext(GlobalContext)
-  const handleClose = () => setShow(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { state, dispatch } = useContext(GlobalContext);
+
+  const handleClose = () => {
+    setShow(false);
+    setEmail('');
+    setPassword('');
+  };
   const handleShow = () => setShow(true);
-  const LoginUser=(e)=>{
+  const LoginUser = (e) => {
     e.preventDefault();
-const payload ={email,password}
-console.log (payload)
+    const payload = { email, password };
 
-// axios.post('http://localhost:1234/api/login',payload)
-// .then(json=>{
-//   console.log(json.data)
-//   Cookise.set('token',json.data.token)
-// setShow(false)
-// })
-// .catch(err=>console.log(err))
-//   }
-axios.post('http://localhost:1234/api/login',payload)
-.then  ((json )=> {
+    axios
+      .post('http://localhost:1234/api/login', payload)
+      .then((json) => {
+        setShow(false);
+        Cookies.set('token', json.data.token);
+        dispatch({
+          type: 'LOGIN',
+          token: json.data.token,
+        });
 
-  setShow(false)
-    Cookies.set('token',json.data.token)
-    dispatch(
-      {
-      type: "LOGIN",
-       token: json.data.token
-    })
-  }
-)
-.catch(err=>console.log(err))
-  }
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Successful',
+          text: 'You have successfully logged in!',
+        });
+      })
+      .catch((err) => {
+        setShow(false);
+
+        if (err.response && err.response.data && err.response.data.message) {
+          const errorMessage = err.response.data.message;
+          if (errorMessage.includes('email') && errorMessage.includes('password')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Email and Password',
+              text: 'Please enter valid email and password.',
+            });
+          } else if (errorMessage.includes('email')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Email',
+              text: 'Please enter a valid email.',
+            });
+          } else if (errorMessage.includes('password')) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Invalid Password',
+              text: 'Please enter a valid password.',
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred. Please try again later.',
+            });
+          }
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred. Please try again later.',
+          });
+        }
+      });
+  };
+
   return (
-    <> <button className='btn btn-secondary mx-1' onClick={handleShow}> Login</button>
+    <>
+      <button className='btn btn-dark login-submit-btn mx-1' onClick={handleShow}>
+        Login
+      </button>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
+          <Modal.Title className="text-center w-100 login-modal-title">Login</Modal.Title>
         </Modal.Header>
-        <Modal.Body><form onSubmit={LoginUser}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
-            />
-            <div id="emailHelp" className="form-text">
-              We'll never share your email with anyone else.
+        <Modal.Body className="login-form" style={{ backgroundColor: 'peachpuff', padding: '20px' }}>
+          <form onSubmit={LoginUser}>
+            <div className="mb-3">
+              <label htmlFor="exampleInputEmail1" className="form-label">
+                Email address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="exampleInputPassword1"
-              value={password}
-              onChange={(e)=>setPassword(e.target.value)}
-            />
-          </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="exampleInputPassword1"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </form>
+            <button type="submit" className="btn btn-dark login-submit-btn">
+              Submit
+            </button>
+          </form>
         </Modal.Body>
-
-      </Modal></>
-  )
+      </Modal>
+    </>
+  );
 }
