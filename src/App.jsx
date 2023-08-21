@@ -11,6 +11,13 @@ const UserRolee = {
   'user': User,
   'guest': Guest
 }
+
+
+ export const AppRoute ='http://localhost:1234/'
+
+
+
+ 
 const UserByRole = (role) => UserRolee[role] || UserRolee['guest']
 // const UserByRole =  (role) => UserRolee[role]||UserRolee['admin']
 

@@ -4,8 +4,10 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { storage } from '../utils/FirebaseConfige';
-// import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import axios from 'axios';
+import AppRoute from'../../App'
+
 
 function AddProducts({ recallData }) {
 
@@ -16,7 +18,7 @@ function AddProducts({ recallData }) {
     const [category, setcategory,] = useState("")
     const [productname, setproductname] = useState("")
     const [price, setprice] = useState(0)
-    const [productthumnail, setProductthumnail,] = useState(null)
+    const [thumbnail, setthumbnail,] = useState(null)
     const [description, setdescription] = useState("")
     const [images, setimages] = useState([])
 
@@ -26,7 +28,29 @@ function AddProducts({ recallData }) {
     const [categories, setcategories,] = useState([])
     const [ProductName, setProductName] = useState([])
 
+    //map ko rokny k liya ya krna h arrow function banana h or us my 
 
+    const urls = []
+    const MultiplImageUpload = () =>
+
+        images?.map((val) => {
+
+            const MultiplimageRef = ref(storage, `images/Product/${ProductName}/${val.name}`);
+            return uploadBytes(MultiplimageRef, val).then((snapshot) => {
+                return getDownloadURL(snapshot.ref)
+                    .then((url) => {
+                        urls.push(url)
+                        console.log(urls)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+            });
+        })
+
+
+
+    //API VALUES
     const [brandVal, setbrandVal] = useState([])
     const [categoriesVal, setcategoriesVal] = useState([])
 
@@ -35,12 +59,16 @@ function AddProducts({ recallData }) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => {
-        axios.get('http://localhost:1234/api/all-brands').then((json) => {
+        
+        axios.get(`${AppRoute}api/all-brands`).then((json) => {
             setbrandVal(json.data.brand)
-            console.log((json.data.brand))
-            axios.get('http://localhost:1234/api/all-categories').then((json) => {
+            // console.log((json.data.brand))
+
+           
+            axios.get (`${AppRoute}api/all-categories`)
+            .then((json) => {
                 setcategoriesVal(json.data.categories)
-                console.log((json.data.categories))
+                // console.log((json.data.categories))
                 setShow(true)
             })
 
@@ -48,49 +76,44 @@ function AddProducts({ recallData }) {
 
     };
 
-
-
     const SubmitProduct = (e) => {
         e.preventDefault();
-        const payload = {
-            productname,
-            brand,
-            category,
-            price,
-            productthumnail,
-            images,
-            description
+      
+  
 
-        }
+        const uploadImages = MultiplImageUpload()
+        // funstion ki calling ko rokna 
+        Promise.all(uploadImages)
+            .then(() => {
+                console.log("multiple images uploaded successfully", urls)
+                const storageRef = ref(storage, `images/Product/${ProductName}/${thumbnail.name}`);
+                uploadBytes(storageRef, thumbnail).then((snapshot) => {
+                    getDownloadURL(snapshot.ref)
+                    .then((url) => {
+                        const payload = {
+                            productname,
+                            brand,
+                            category,
+                            price,
+                            thumbnail:url,
+                            images: urls,
+                            description
+                        }
+                console.log("ready to hit api",payload)
+                    })
+                    .catch((error) => {
+                     console.log(error)
+                    });
+                });
+            })
+            .catch((err) => console.log(err))
 
-        console.log(payload)
 
 
 
-        // const ImageRef = ref(storage, `images/Product/${ProductImage.name}`)
 
-        // uploadBytes(ImageRef, ProductImage).then((snapshot) => {
 
-        //     getDownloadURL(snapshot.ref)
-        //         .then((url) => {
-        //             console.log(url)
-        //             const payload = { ProductName, ProductImage: url }
 
-        //             axios.post('http://localhost:1234/api/add-Product', payload)
-        //                 .then((json) => {
-        //                     setShow(false);
-        //                     recallData(json.data.categorise);
-
-        //                     console.log(json.data)
-        //                 })
-        //                 .catch((error) => alert(error.message))
-        //             console.log("READY TO UPLOAD", payload)
-        //         })
-        //         .catch((error) => {
-        //             console.log(error)
-        //         });
-
-        // });
 
     }
     return (
@@ -138,7 +161,7 @@ function AddProducts({ recallData }) {
                             <label htmlFor="formFile" className="form-label">
                                 Product Image
                             </label>
-                            <input onChange={(e) => setProductthumnail(e.target.files[0])} className="form-control" type="file" id="productImage" />
+                            <input onChange={(e) => setthumbnail(e.target.files[0])} className="form-control" type="file" id="thumbnail" />
                         </div>
 
                         <div className="mb-3">
@@ -183,8 +206,8 @@ function AddProducts({ recallData }) {
 
                         <FloatingLabel controlId="floatingTextarea2" label="Description">
                             <Form.Control
-                             value={description}
-                             onChange={(e) => setdescription(e.target.value)}
+                                value={description}
+                                onChange={(e) => setdescription(e.target.value)}
                                 as="textarea"
                                 placeholder="Leave a comment here"
                                 style={{ height: '100px' }}

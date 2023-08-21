@@ -1,8 +1,10 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import Col from 'react-bootstrap/Col';
 import { Spinner } from 'react-bootstrap'
 import { CartContext } from '../Cart_context/context'
+import AppRoute from '../../App'
 export default function ProductPage() {
 
   const { _id } = useParams()
@@ -11,15 +13,15 @@ export default function ProductPage() {
 
   const { cart_state, cart_dispatch } = useContext(CartContext)
 
-  
+
 
   useEffect(() => {
 
 
-    console.log("Yeh==> ",cart_state)
+    console.log(cart_state)
 
-
-    axios.get(`http://localhost:1234/api/get-product-id/${_id}`)
+ 
+    axios.get(`${AppRoute}api/get-product-id/${_id}`)
       .then(json => setProduct(json.data.product))
       .catch(err => console.log(err))
   }, [])
@@ -29,62 +31,94 @@ export default function ProductPage() {
     console.log(payload)
 
     cart_dispatch({
-      type :"ADD_TO_CART",
+      type: "ADD_TO_CART",
       payload
     })
   }
-//loader logic
-    // const [loading, setLoading] = useState(true);
+  //loader logic
+  const [loading, setLoading] = useState(true);
 
-    // useEffect(() => {
+  useEffect(() => {
 
-    //   const timeout = setTimeout(() => {
-    //     setLoading(false); 
-    //   }, 2000); 
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
 
-    //   return () => {
-    //     clearTimeout(timeout); 
-    //   };
-    // }, []);   
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
 
   return (
 
 
 
     <div style={{ backgroundColor: 'peachpuff', minHeight: '100vh' }}>
+      {loading ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      ) : (
 
+        <div>
+          <div className="container ">
+            <div className="row ">
 
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
 
               <h1>product page</h1>
-              <img src={product.thumbnail} alt="" srcSet="" className='img-fluid' />
 
-            </div>
-            <div className="col-md-6 py-5">
-              <h2>{product.title} - {product.price}</h2>
-              <small className="text-secondary">{product.rating}</small>
-              <div className="row my-5">
-                {
-                  product?.images?.map((val, key) => <div key={key} className='col-md-4 border border-dark rounded mx-1 my-1'><img src={val} className='img-fluid' /></div>)
-                }
+              <Col xs={12} md={4} className="container pt-5 pb-5" style={{ marginTop: "100px" }}>
+                <div className="card1 " style={{ height: "500px" }}>
+                  <h2>
+                    <img
+                      src={product.thumbnail} alt="" srcSet="" className='img-fluid'
+
+                    />
+                  </h2>
+              
+                </div>
+               <div className='mt-5'>
+                <h4>Product Description</h4>
+                <p> {product.description} </p>
+               </div>
+              </Col>
+
+              <div className="col-md-6">
+                <h2>{product.title} - {product.price}</h2>
+                <small className="text-secondary">{product.rating}</small>
+                <div className="row my-5">
+                  {
+                    product?.images?.map((val, key) => <div key={key} className='col-md-4 border border-dark  mx-1 my-1'><img src={val} className='img-fluid' /></div>)
+                  }
+                </div>
+
+                <div className='d-flex justify-content-around align-items-center text-white bg-black py-4 rounded border border-secondary'>
+                  <button className="btn btn-light" disabled={quantity <= 1 ? true : false} onClick={() => setQuantity(quantity - 1)}>-</button>
+                  {quantity}
+                  <button className="btn btn-light" onClick={() => setQuantity(quantity + 1)}>+</button>
+                </div>
+
+                <div className='d-block mt-3 text-center'>
+                  <button className="w-50 btn-light rounded-pill text-white border border-black mx-auto " onClick={addtocart}  variant="light">Add to Cart</button>
+                </div>
+
               </div>
-
-              <div className='d-flex justify-content-around align-items-center bg-light py-4 rounded border border-secondary'>
-                <button className="btn btn-dark" disabled={quantity <= 1 ? true : false} onClick={() => setQuantity(quantity - 1)}>-</button>
-                {quantity}
-                <button className="btn btn-dark" onClick={() => setQuantity(quantity + 1)}>+</button>
-              </div>
-
-              <div className='d-block mt-3'><button className="w-100 btn btn-dark" onClick={addtocart}>Add to Cart</button></div>
             </div>
           </div>
-        </div>
 
-      </div>
+        </div>
+      )}
 
     </div>
+
   )
 }

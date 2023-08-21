@@ -7,7 +7,7 @@ import {  ref, getDownloadURL ,uploadBytes} from "firebase/storage";
 
 
 
-function AddBarands() {
+function AddBrands() {
   const [show, setShow] = useState(false);
 
   const [ BrandName, setBrandName] = useState("")
@@ -84,4 +84,4 @@ uploadBytes(ImageRef, BrandImage).then((snapshot) => {
   );
 }
 
-export default AddBarands;
+export default AddBrands;

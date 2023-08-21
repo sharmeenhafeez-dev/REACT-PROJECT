@@ -5,6 +5,7 @@ import { GlobalContext } from '../Admin/Context/context';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import './signup.css'; // Import the CSS file
+import AppRoute from '../App'
 
 export default function Signup() {
   const [show, setShow] = useState(false);
@@ -22,8 +23,8 @@ export default function Signup() {
     e.preventDefault();
     const payload = { email, password, username , address, contact  };
 
-    axios
-      .post('http://localhost:1234/api/signup', payload)
+    axios 
+      .post( `${AppRoute}api/signup`, payload)
       .then((json) => {
         setShow(false);
         Cookies.set('token', json.data.token);

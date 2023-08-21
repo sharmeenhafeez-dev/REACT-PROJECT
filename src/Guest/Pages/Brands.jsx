@@ -1,19 +1,53 @@
 import React, { useEffect, useState } from 'react'
 import UserCards from '../../User/Components/UserCards'
+import { Spinner } from 'react-bootstrap'
+import AppRoute from'../../App'
+
 import axios from 'axios'
 
 export default function Brands() {
     const [brand, setBrands] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:1234/api/all-brands')
+    
+        axios.get(`${AppRoute}api/all-brands`)
         .then(json => setBrands(json.data.brand))
         .catch(err => console.log(err.message))
     }, [])
+//loader logic
+    
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+  
+  const timeout = setTimeout(() => {
+    setLoading(false); 
+  }, 2000); 
+
+  return () => {
+    clearTimeout(timeout); 
+  };
+}, []); 
 
 
     return (
-        <div className="container my-5">
-            <div className="text-center">
+        <div style={{ backgroundColor: 'peachpuff', minHeight: '100vh' }}>
+      {loading ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+          }}
+        >
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+        ) : (
+    <div>
+    <div className="container ">
+            <div className="text-center py-5">
                 <h2>Brands</h2>
                 <small className="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum delectus magnam doloribus voluptatibus possimus corrupti aliquid itaque harum debitis ipsa!</small>
             </div>
@@ -25,5 +59,9 @@ export default function Brands() {
 
             </div>
         </div>
+
+    </div>
+  )}
+</div>
     )
 }

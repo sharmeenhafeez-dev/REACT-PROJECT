@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
 import UserCards from '../Components/UserCards'
+import AppRoute from '../../App'
 
 export default function Category() {
     const [category, setCategory] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:1234/api/all-categories')
+
+   
+        axios.get(`${AppRoute}api/all-categories`)
             .then(json => setCategory(json.data.categories))
             .catch(err => console.log(err.message))
 
@@ -45,7 +48,7 @@ export default function Category() {
   </div>
   ) : (
     <div className="container">
-            <div className="text-center">
+            <div className="text-center py-5">
                 <h2>Category</h2>
                 <small className="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum delectus magnam doloribus voluptatibus possimus corrupti aliquid itaque harum debitis ipsa!</small>
             </div>

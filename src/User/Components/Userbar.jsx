@@ -21,7 +21,7 @@ export default function Userbar() {
   return (
     <Navbar className='userbar'>
       <Container>
-        <Navbar.Brand href="#home" className='text-black'>User</Navbar.Brand>
+        <Navbar.Brand href="#home" className='text-black'>E.COM.TRENDS</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
 

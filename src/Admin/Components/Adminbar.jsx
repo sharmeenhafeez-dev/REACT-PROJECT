@@ -4,11 +4,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { CgProfile } from 'react-icons/cg';
 import Login from '../../Components/Login';
-import Logout from '../../Components/Logout';
+
 
 export default function Adminbar() {
   return (
-    <Navbar  className='bg-dark'>
+    <Navbar  className='bg-black'>
       <Container>
         <Navbar.Brand href="#home" className='text-white'>Admin</Navbar.Brand>
         <Navbar.Toggle />
@@ -19,8 +19,8 @@ export default function Adminbar() {
               Admin Name
             </span>
           </Navbar.Text>
-          <button className=" btn btn-light ms-4"><Login/></button>
-          <button className=" btn btn-light ms-4"><Logout/></button>
+          <Login/>
+        
         </Navbar.Collapse>
       </Container>
     </Navbar>

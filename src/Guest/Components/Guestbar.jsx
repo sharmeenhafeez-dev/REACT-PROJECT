@@ -6,13 +6,13 @@ import { CgProfile } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 import Login from '../../Components/Login';
 import Signup from '../../Components/Signup';
-import './guestbar.css'; // Import the CSS file
+import './guestbar.css'; 
 
 export default function Guestbar() {
   return (
     <Navbar className='guestbar'>
       <Container>
-        <Navbar.Brand href="#home" className='text-black'>Guest</Navbar.Brand>
+        <Navbar.Brand href="#home" className='text-black'>E.COM.TRENDS</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
 
@@ -25,7 +25,7 @@ export default function Guestbar() {
           <Navbar.Text className='text-black'>
             <span style={{ display: 'flex', alignItems: 'center' }}>
               <CgProfile style={{ marginRight: '10px' }} />
-              <span className="guestbar-user">Guest Name</span>
+              <span className="guestbar-user"></span>
             </span>
           </Navbar.Text>
         <Login />

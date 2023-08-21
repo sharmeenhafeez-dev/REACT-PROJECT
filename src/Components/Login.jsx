@@ -5,6 +5,7 @@ import { GlobalContext } from '../Admin/Context/context';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import './login.css'; // Import the CSS file
+import AppRoute from '../App'
 
 export default function Login() {
   const [show, setShow] = useState(false);
@@ -21,9 +22,9 @@ export default function Login() {
   const LoginUser = (e) => {
     e.preventDefault();
     const payload = { email, password };
-
+  
     axios
-      .post('http://localhost:1234/api/login', payload)
+      .post( `${AppRoute}api/login`, payload)
       .then((json) => {
         setShow(false);
         Cookies.set('token', json.data.token);

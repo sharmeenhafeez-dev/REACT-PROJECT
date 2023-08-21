@@ -8,20 +8,21 @@ import ProductsByCategory from './Pages/ProductsByCategory';
 import Products from './Pages/Products';
 import ProductPage from './Pages/ProductPage';
 import ProductsByBrand from './Pages/ProductsByBrand';
-import CartPage from '../User/Pages/CartPage';
+// import CartPage from '../User/Pages/CartPage';
 import { GlobalContext } from '../Admin/Context/context';
+import Footer from '../Components/Footer';
 
 export default function Guest() {
     const { state } = useContext(GlobalContext);
 
-    const PrivateRoute = ({ path, element }) => {
-        if (state.isAuthenticated) {
-            return <Route path={path} element={element} />;
-        } else {
+    // const PrivateRoute = ({ path, element }) => {
+    //     if (state.isAuthenticated) {
+    //         return <Route path={path} element={element} />;
+    //     } else {
           
-            return <Navigate to="/login" replace={true} />;
-        }
-    };
+    //         return <Navigate to="/login" replace={true} />;
+    //     }
+    // };
 
     return (
         <Router>
@@ -37,10 +38,11 @@ export default function Guest() {
                     <Route path="/category/:CategoryName" element={<ProductsByCategory />} />
 
                   
-                    <Route path="/cart" element={<PrivateRoute path="/cart" element={<CartPage />} />} />
+                    {/* <Route path="/cart" element={<PrivateRoute path="/cart" element={<CartPage />} />} /> */}
 
                     <Route path="*" element={<Navigate to="/login" replace={true} />} />
                 </Routes>
+                <Footer/>
             </>
         </Router>
     );

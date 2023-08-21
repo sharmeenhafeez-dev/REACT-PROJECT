@@ -13,7 +13,7 @@ export default function Admin() {
     <Router>
       <Adminbar/>
       <div className="row ">
-        <div className="col-md-3 bg-dark">
+        <div className="col-md-3 bg-black">
           <Sidebar/>
         </div>
         <div className="col-md-9">

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react'
 import UserCards from '../Components/UserCards'
 import { Spinner } from 'react-bootstrap'
 import axios from 'axios'
+import { AppRoute } from '../../App'
 
 export default function Products() {
     const [product, setProducts] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:1234/api/products')
+
+    
+        axios.get(`${AppRoute}api/products`)
             .then(json => setProducts(json.data.product))
             .catch(err => console.log(err))
     }, [])
@@ -43,8 +46,8 @@ const [loading, setLoading] = useState(true);
     </Spinner>
   </div>
   ) : (
-    <div className="container my-5">
-            <div className="text-center">
+    <div className="container ">
+            <div className="text-center py-5">
                 <h2>Products</h2>
                 <small className="text-secondary">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum delectus magnam doloribus voluptatibus possimus corrupti aliquid itaque harum debitis ipsa!</small>
             </div>
