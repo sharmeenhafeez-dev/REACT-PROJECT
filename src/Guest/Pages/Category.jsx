@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 import UserCards from '../../User/Components/UserCards'
 
 export default function Category() {
@@ -9,7 +9,7 @@ export default function Category() {
     useEffect(() => {
 
      
-        axios.get( `${AppRoute}api/all-categories`)
+        axios.get(`${AppRoute}api/all-categories`)
             .then(json => setCategory(json.data.categories))
             .catch(err => console.log(err.message))
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 import UserCards from '../../User/Components/UserCards'
 import Brands from './Brands'
 

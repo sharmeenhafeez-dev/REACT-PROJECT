@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import GuestCards from './GuestCards'
 import axios from 'axios'
 
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 
 export default function Brand() {
     const [brand, setbrand] = useState([])
     useEffect(() => {
 
       
-        axios.get( `${AppRoute}api/all-brands`)
+        axios.get(`${AppRoute}api/all-brands`)
             .then(json => setbrand(json.data.brand))
             .catch(err =>  console.log(err.message))
 

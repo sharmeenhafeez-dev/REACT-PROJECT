@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 export default function ProductPage() {
 
     const { _id } = useParams()

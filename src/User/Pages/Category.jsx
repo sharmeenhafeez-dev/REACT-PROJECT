@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
 import UserCards from '../Components/UserCards'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 
 export default function Category() {
     const [category, setCategory] = useState([])

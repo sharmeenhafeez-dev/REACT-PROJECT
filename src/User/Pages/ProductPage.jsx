@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import Col from 'react-bootstrap/Col';
 import { Spinner } from 'react-bootstrap'
 import { CartContext } from '../Cart_context/context'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 export default function ProductPage() {
 
   const { _id } = useParams()

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import GuestCards from './GuestCards'
 import axios from 'axios'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 export default function Category() {
     const [category, setCategory] = useState([])
     useEffect(() => {
 
        
-        axios.get( `${AppRoute}api/all-categories`)
+        axios.get(`${AppRoute}api/all-categories`)
             .then(json => setCategory(json.data.categories))
             .catch(err => console.log(err.message))
 

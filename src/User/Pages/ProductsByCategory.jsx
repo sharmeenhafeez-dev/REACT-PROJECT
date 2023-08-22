@@ -4,7 +4,7 @@ import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
 import UserCards from '../Components/UserCards'
 import Brands from './Brands'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 
 export default function ProductsByBrand() {
     const { CategoryName } = useParams()

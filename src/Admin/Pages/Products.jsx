@@ -3,7 +3,7 @@ import AddProduct from '../Components/AddProduct';
 import axios from 'axios';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
-import AppRoute from'../../App'
+import { AppRoute } from '../../App'
 
 
 export default function Products() {

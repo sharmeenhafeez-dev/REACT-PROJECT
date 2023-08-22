@@ -10,7 +10,7 @@ import { AppRoute } from '../../App'
 export default function Brands() {
     const [brand, setBrands] = useState([])
     useEffect(() => {
-        axios.get('http://localhost:1234/api/all-brands')
+        axios.get(`${AppRoute}api/all-brands`)
         .then(json => setBrands(json.data.brand))
         .catch(err => console.log(err.message))
     }, [])

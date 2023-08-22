@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Spinner } from 'react-bootstrap';
 import UserCards from '../Components/UserCards';
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 
 export default function ProductsByBrand() {
   const { BrandName } = useParams();

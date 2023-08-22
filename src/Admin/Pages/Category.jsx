@@ -3,7 +3,7 @@ import AddCategory from '../Components/AddCategory';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import axios from 'axios';
-import AppRoute from'../../App'
+import { AppRoute } from '../../App'
 
 
 export default function Category() {
@@ -23,7 +23,7 @@ export default function Category() {
 
 
   const deleteCategory = (CategoryName) => {
-    axios.delete( `${AppRoute}api/delete-category`, {data: { CategoryName },})
+    axios.delete(`${AppRoute}api/delete-category`, {data: { CategoryName },})
       .then((response) => {
         setCategory(response.data.updatedCategories);
         setEditingCategory(null);

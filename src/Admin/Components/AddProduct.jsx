@@ -6,7 +6,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { storage } from '../utils/FirebaseConfige';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import axios from 'axios';
-import AppRoute from'../../App'
+import { AppRoute } from '../../App'
 
 
 function AddProducts({ recallData }) {

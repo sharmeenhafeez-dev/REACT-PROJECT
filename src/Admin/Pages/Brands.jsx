@@ -3,7 +3,7 @@ import AddBrands from '../Components/AddBrands';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import axios from 'axios';
-import AppRoute from'../../App'
+import { AppRoute } from '../../App'
 
 
 export default function Brands() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import UserCards from '../../User/Components/UserCards'
 import { Spinner } from 'react-bootstrap'
-import AppRoute from '../../App'
+import { AppRoute } from '../../App'
 import axios from 'axios'
 
 export default function Products() {

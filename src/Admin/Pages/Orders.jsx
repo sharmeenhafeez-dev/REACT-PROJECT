@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './order.css'
 import { FaShoppingCart, FaMapMarkerAlt } from 'react-icons/fa';
-import AppRoute from'../../App'
+import { AppRoute } from '../../App'
 
 
 function OrdersList() {
